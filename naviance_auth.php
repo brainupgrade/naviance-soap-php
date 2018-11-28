@@ -119,7 +119,7 @@ $authResult_str = ($authResult) ? 'true' : 'false';
 
 // construct and send the response XML that naviance is expecting
 echo 
-'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="https://go.vcschools.org/navianceauthentication/types">
+'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="https://server.mydomain.com/navianceauthentication/types">
 <SOAP-ENV:Body>
 <ns1:AuthenticateResponse>
 <AuthenticateResult>'.$authResult_str.'</AuthenticateResult>
