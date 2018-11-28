@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+	name="NavianceAuthentication" 
+	targetNamespace="https://server.mydomain.com/navianceauthentication"
+	xmlns:tns="https://server.mydomain.com/navianceauthentication"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="https://server.mydomain.com/navianceauthentication/types">
+<types>
+	<xsd:schema targetNamespace="https://server.mydomain.com/navianceauthentication/types" xmlns="https://server.mydomain.com/navianceauthentication/types">
+		<xsd:complexType name="Authenticate">
+			<xsd:sequence>
+				<xsd:element name="username" type="xsd:string"></xsd:element>
+				<xsd:element name="password" type="xsd:string"></xsd:element>
+				<xsd:element name="userType" type="xsd:string"></xsd:element>
+				<xsd:element name="sourceIp" type="xsd:string"></xsd:element>
+				<xsd:element name="passphrase" type="xsd:string"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:element name="Authenticate" nillable="true" type="ns:Authenticate"></xsd:element>
+		<xsd:complexType name="ResultMetaDataType">
+			<xsd:sequence>
+				<xsd:element name="ResultCode" type="xsd:int"></xsd:element>
+				<xsd:element name="ResultMessage" type="xsd:string"></xsd:element>
+				<xsd:element name="ResultDescription" type="xsd:string"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:element name="ResultMetaDataType" nillable="true" type="ns:ResultMetaDataType"></xsd:element>
+		<xsd:complexType name="AuthenticateResponse">
+			<xsd:sequence>
+				<xsd:element name="AuthenticateResult" type="xsd:boolean"></xsd:element>
+				<xsd:element name="ResultMetaData" element="ns:ResultMetaDataType"></xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:element name="AuthenticateResponse" nillable="true" type="ns:AuthenticateResponse"></xsd:element>
+	</xsd:schema>
+</types>
+<message name="AuthenticateRequest">
+	<part name="parameters" element="ns:Authenticate"></part>
+</message>
+<message name="AuthenticateResponse">
+	<part name="parameters" element="ns:AuthenticateResponse"></part>
+</message>
+<portType name="NavianceAuthenticationPortType">
+	<operation name="Authenticate">
+		<input message="tns:AuthenticateRequest"></input>
+		<output message="tns:AuthenticateResponse"></output>
+	</operation>
+</portType>
+<binding name="NavianceAuthenticationBinding" type="tns:NavianceAuthenticationPortType">
+	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+	<operation name="Authenticate">
+	<soap:operation soapAction="https://server.mydomain.com/navianceauthentication/#Authenticate"></soap:operation>
+		<input>
+			<soap:body use="literal" namespace="https://server.mydomain.com/navianceauthentication"></soap:body>
+		</input>
+		<output>
+			<soap:body use="literal" namespace="https://server.mydomain.com/navianceauthentication"/>
+		</output>
+	</operation>
+</binding>
+<service name="NavianceAuthenticationService">
+	<port name="NavianceAuthenticationPort" binding="tns:NavianceAuthenticationBinding">
+		<soap:address location="https://server.mydomain.com/soap/naviance_auth.php"></soap:address>
+	</port>
+</service>
+</definitions>
